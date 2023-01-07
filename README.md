@@ -1,7 +1,7 @@
 ESP32C3 NimBLE server example
 ====================
 
-<img title="" src="./image/client_and_server_photo.jpg" alt="" width="817">
+<img title="" src="./image/client_and_server_photo.jpg" alt="" width="600">
 
 This example based on [SIMS-IOT-Devices / FreeRTOS-ESP-IDF-BLE-Server](https://github.com/SIMS-IOT-Devices/FreeRTOS-ESP-IDF-BLE-Server). Added features:
 
@@ -9,4 +9,4 @@ This example based on [SIMS-IOT-Devices / FreeRTOS-ESP-IDF-BLE-Server](https://
 
 * Simple protocol through structure with counter and transmit power change (according to client power change)
 
-This example works with the [ESP32C3 NimBLE client example]()
+This example works with the [ESP32C3 NimBLE client example](https://github.com/P0nyL0v3r/ESP32C3-NimBLE-client-example)
