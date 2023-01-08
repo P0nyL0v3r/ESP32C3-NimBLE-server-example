@@ -954,6 +954,21 @@
 			<location>E:/software/esp/frameworks/esp-idf-v4.4.3/components/spiffs/spiffs_api.c</location>
 		</link>
 		<link>
+			<name>build/ide/esp_idf_components/ssd1306/ssd1306.c</name>
+			<type>1</type>
+			<location>E:/software/esp/frameworks/esp-idf-v4.4.3/components/ssd1306/ssd1306.c</location>
+		</link>
+		<link>
+			<name>build/ide/esp_idf_components/ssd1306/ssd1306_i2c.c</name>
+			<type>1</type>
+			<location>E:/software/esp/frameworks/esp-idf-v4.4.3/components/ssd1306/ssd1306_i2c.c</location>
+		</link>
+		<link>
+			<name>build/ide/esp_idf_components/ssd1306/ssd1306_spi.c</name>
+			<type>1</type>
+			<location>E:/software/esp/frameworks/esp-idf-v4.4.3/components/ssd1306/ssd1306_spi.c</location>
+		</link>
+		<link>
 			<name>build/ide/esp_idf_components/tcp_transport/transport.c</name>
 			<type>1</type>
 			<location>E:/software/esp/frameworks/esp-idf-v4.4.3/components/tcp_transport/transport.c</location>

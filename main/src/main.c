@@ -31,36 +31,34 @@ typedef union
   uint8_t raw[DATA_BUF_SIZE];
   struct
   {
+	  esp_power_level_t power;
+	  uint16_t counter;
 	  struct
 	  {
-		  uint32_t power;
-		  uint32_t counter;
-	  }client;
-	  struct
-	  {
-		  uint32_t power;
-		  uint32_t counter;
+		  int8_t rssi;
 	  }server;
+	  struct
+	  {
+		  int8_t rssi;
+	  }client;
   };
 } data_buf;
 
 
 data_buf data;
-uint32_t counter;
 
 // Write data to ESP32 defined as server
 static int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
 {
-	ESP_LOGI(TAG,"recive data from client");
+	ESP_LOGD(TAG,"recive data from client");
 	os_mbuf_copydata(ctxt->om, 0, DATA_BUF_SIZE, &data);
 
 	esp_power_level_t pwr = esp_ble_tx_power_get(ESP_BLE_PWR_TYPE_DEFAULT);
-	if( pwr != data.server.power)
+	if( pwr != data.power)
 	{
-		ESP_LOGI(TAG,"old TX power: %d",pwr);
-		ESP_LOGI(TAG,"new TX power: %d",data.server.power);
+		ESP_LOGI(TAG,"TX power, old: %d , new: %d",pwr,data.power);
 
-		esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_DEFAULT,(esp_power_level_t) data.server.power);
+		esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_DEFAULT,data.power);
 	}
 
     return 0;
@@ -69,10 +67,11 @@ static int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_g
 // Read data from ESP32 defined as server
 static int device_read(uint16_t con_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
 {
-	ESP_LOGI(TAG,"send data to client");
+	ESP_LOGD(TAG,"send data to client");
 
-	counter++;
-	data.server.counter = counter;
+	data.counter++;
+
+	ble_gap_conn_rssi(con_handle,&data.server.rssi);
 
 	os_mbuf_append(ctxt->om, &data, DATA_BUF_SIZE);
 
@@ -169,4 +168,6 @@ void app_main()
     ble_gatts_add_svcs(gatt_svcs);             // 4 - Initialize NimBLE configuration - queues gatt services.
     ble_hs_cfg.sync_cb = ble_app_on_sync;      // 5 - Initialize application
     nimble_port_freertos_init(host_task);      // 6 - Run the thread
+
+    esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_DEFAULT, ESP_PWR_LVL_P21);
 }
